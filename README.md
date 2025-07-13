@@ -66,10 +66,17 @@ Before configuring Splunk, a basic Active Directory domain was created on the sa
 
 <li>
   Queried all logs within <code>ad_index</code> and saw the 5 events were all sourced from Active Directory. This indicated the active monitoring of AD through Splunk and that it was configured correctly.<br/>
-  <img src="Screenshots/ADSearch.png" width="600"/>
-  <br/>
-  <span style="font-weight: bold;">Table View:</span> All events are from Active Directory, and the PC name matches the Windows Server 2022 instance.<br/>
-  <img src="Screenshots/SearchTable.png" width="500"/>
+
+  <ul style="list-style-type: lower-alpha; padding-left: 20px;">
+    <li>
+      <strong>Search query and log results:</strong><br/>
+      <img src="Screenshots/ADSearch.png" width="600"/><br/>
+    </li>
+    <li>
+      <strong>Table View:</strong> All events are from Active Directory, and <code>host</code> matches the PC name of the Windows Server 2022 instance.<br/>
+      <img src="Screenshots/SearchTable.png" width="500"/>
+    </li>
+  </ul>
 </li>
 
   <li>
@@ -88,24 +95,34 @@ Before configuring Splunk, a basic Active Directory domain was created on the sa
   </li>
 
 <!-- last step begins here-->
- <li>
+<li>
   Used a PowerShell script to automate creating <strong>1,000 new users</strong> and verified that a lot more logs were generated in Splunk, specifically for all the new users that were created via the PS script.<br/>
-  <span style="font-weight: bold;">PS script for creating 1000 users automatically:</span><br/>
-  <img src="Screenshots/1000UsersScript.png" width="800"/><br/>
 
-  <span style="font-weight: bold;">Script running:</span><br/>
-  <img src="Screenshots/ScriptRan-UsersCreation.png" width="250"/><br/>
-
-  <span style="font-weight: bold;">_USERS directory created in Active Directory under my domain:</span><br/>
-  <img src="Screenshots/_USERS-made.png" width="250"/><br/>
-
-  <span style="font-weight: bold;">_USERS populated with the 1000 users:</span><br/>
-  <img src="Screenshots/_USERS-populated.png" width="300"/><br/>
-
-  <span style="font-weight: bold;">Events that were generated and forwarded from Active Directory to Splunk with this automation (3.5K+ logs!):</span><br/>
-  <img src="Screenshots/ADIndex3k.png" width="750"/>
+  <ul style="list-style-type: lower-alpha; padding-left: 20px;">
+    <li>
+      <strong>PS script for creating 1000 users automatically:</strong><br/>
+      <img src="Screenshots/1000UsersScript.png" width="800"/><br/>
+    </li>
+    <li>
+      <strong>Script running:</strong><br/>
+      <img src="Screenshots/ScriptRan-UsersCreation.png" width="250"/><br/>
+    </li>
+    <li>
+      <strong>_USERS directory created in Active Directory under my domain:</strong><br/>
+      <img src="Screenshots/_USERS-made.png" width="250"/><br/>
+    </li>
+    <li>
+      <strong>_USERS populated with the 1000 users:</strong><br/>
+      <img src="Screenshots/_USERS-populated.png" width="300"/><br/>
+    </li>
+    <li>
+      <strong>Events that were generated and forwarded from Active Directory to Splunk with this automation (3.5K+ logs!):</strong><br/>
+      <img src="Screenshots/ADIndex3k.png" width="750"/>
+    </li>
+  </ul>
 </li>
 <!-- last step ends here-->
+
 
 </ol>
 
