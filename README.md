@@ -27,7 +27,7 @@ Before configuring Splunk, a basic Active Directory domain was created on the sa
 
   <li>
     Setup the Splunk Universal Forwarder's receiving indexer to send data provided the Windows 2022 Server IP and port <code>9997.</code><br/>
-    <img src="Screenshots/SplunkForwarder.png" width="400"/>
+    <img src="Screenshots/SplunkForwarder.png" width="300"/>
   </li>
 
   <li>
