@@ -18,80 +18,95 @@ Before configuring Splunk, a basic Active Directory domain was created on the sa
 
 <ol>
   <li>
-    Made a Windows 2022 Server to host the Splunk enterprise server and the Splunk Universal Forwarder.<br/>
-    <img src="screenshots/step1.png" alt="Step 1 Screenshot" width="600"/>
-  </li>
-
-  <li>
-    Put the user in Domain Admins group so I can use same computer for testing purposes of Splunk enterprise and forwarder.<br/>
-    <img src="screenshots/step2.png" alt="Step 2 Screenshot" width="600"/>
+    Made a Windows 2022 Server to host the Splunk enterprise server and add Splunk Universal Forwarder to.<br/>
   </li>
 
   <li>
      Set up the Splunk Enterprise Server on <code>localhost:8000</code> and configured a receiving rule on port <code>9997</code>.<br/>
-    <img src="screenshots/step3.png" alt="Step 3 Screenshot" width="600"/>
   </li>
 
   <li>
     Setup the Splunk Universal Forwarder's receiving indexer to send data provided the Windows 2022 Server IP and port <code>9997.</code><br/>
-    <img src="screenshots/step4.png" alt="Step 4 Screenshot" width="600"/>
+    <img src="Screenshots/SplunkForwarder.png" width="400"/>
   </li>
 
   <li>
     Created a new <code>local</code> folder in:<br/>
     <code>C:\Program Files\SplunkUniversalForwarder\etc\apps\search</code><br/>
-    <img src="screenshots/step5.png" alt="Step 5 Screenshot" width="600"/>
+    <img src="Screenshots/LocalConfig.png" width="600"/>
   </li>
 
   <li>
     Set up <code>inputs.conf</code> file in this folder.<br/>
-    <img src="screenshots/step6.png" alt="Step 6 Screenshot" width="600"/>
+    <img src="Screenshots/Input-DomainToSplunk.png" width="600"/>
   </li>
 
   <li>
     Restarted Splunk from within the <code>C:\Program Files\SplunkUniversalForwarder\bin</code> directory to save and apply changes made to these configuration files.<br/>
-    <img src="screenshots/step7.png" alt="Step 7 Screenshot" width="600"/>
+    <img src="Screenshots/ForwarderRestart.png" width="400"/>
   </li>
 
   <li>
     Created an index on the Splunk Server's web interface to match name specified <code>inputs.conf</code> file.<br/>
-    <img src="screenshots/step8.png" alt="Step 8 Screenshot" width="600"/>
+    <img src="Screenshots/ADIndex0.png" width="800"/>
   </li>
 
   <li>
     Created user in Active Directory to test monitoring on Splunk.<br/>
-    <img src="screenshots/step9.png" alt="Step 9 Screenshot" width="600"/>
+    <img src="Screenshots/NewUser-AD.png" width="400"/><img src="Screenshots/UserShown.png" width="500"/>
   </li>
-
+  <li>
+    Put the user in <code>Domain Admins</code> group so I can use same computer for testing purposes of Splunk enterprise and forwarder.<br/>
+    <img src="Screenshots/DomainAdminPriv.png" width="400"/>  <img src="Screenshots/NewUser-Login.png" width="300"/>
+  </li>
   <li>
     After some messing around in AD and creating a user we were able to see that 5 events were logged in the <code>ad_index</code>index that was created earlier.<br/>
-    <img src="screenshots/step10.png" alt="Step 10 Screenshot" width="600"/>
+    <img src="Screenshots/ADEvents5.png" width="700"/>
   </li>
 
-  <li>
-    Queried all logs within <code>ad_index</code> and saw the 5 events were all sourced from Active Directory. This indicated the active monitoring of AD through Splunk and that it was configured correctly.<br/>
-    <img src="screenshots/step11.png" alt="Step 11 Screenshot" width="600"/>
-  </li>
+<li>
+  Queried all logs within <code>ad_index</code> and saw the 5 events were all sourced from Active Directory. This indicated the active monitoring of AD through Splunk and that it was configured correctly.<br/>
+  <img src="Screenshots/ADSearch.png" width="600"/>
+  <br/>
+  <span style="font-weight: bold;">Table View:</span> All events are from Active Directory, and the PC name matches the Windows Server 2022 instance.<br/>
+  <img src="Screenshots/SearchTable.png" width="500"/>
+</li>
 
   <li>
     Upon deeper inspection of the latest event, detailed information was shown — including user settings, password expiration status, etc.<br/>
-    <img src="screenshots/step12.png" alt="Step 12 Screenshot" width="600"/>
+    <img src="Screenshots/NewUserInfo.png" width="600"/>
   </li>
 
   <li>
     Narrowed the search to user <strong>John</strong> and found that 4 of the 5 AD events were associated with this user/creation of this user.<br/>
-    <img src="screenshots/step13.png" alt="Step 13 Screenshot" width="600"/>
+    <img src="Screenshots/EventsTied-NewUser.png" width="400"/>
   </li>
 
   <li>
      Gave user <strong>John Jay</strong> Domain Admin privileges, then logged in with that account and confirmed new logs were generated. These included the user's new group/privleges.<br/>
-    <img src="screenshots/step14.png" alt="Step 14 Screenshot" width="600"/>
+    <img src="Screenshots/UpdatedLog.png" width="400"/><img src="Screenshots/LogonResult.png" width="400"/>
   </li>
 
-  <li>
-    Used a PowerShell script to automate creating <strong>1,000 new users</strong> and verified that a lot more logs were generated in Splunk, specifically for all the new users that were created via the PS script.<br/>
-    <img src="screenshots/step15.png" alt="Step 15 Screenshot" width="600"/>
-  </li>
+<!-- last step begins here-->
+ <li>
+  Used a PowerShell script to automate creating <strong>1,000 new users</strong> and verified that a lot more logs were generated in Splunk, specifically for all the new users that were created via the PS script.<br/>
+  <span style="font-weight: bold;">PS script for creating 1000 users automatically:</span><br/>
+  <img src="Screenshots/1000UsersScript.png" width="800"/><br/>
+
+  <span style="font-weight: bold;">Script running:</span><br/>
+  <img src="Screenshots/ScriptRan-UsersCreation.png" width="250"/><br/>
+
+  <span style="font-weight: bold;">_USERS directory created in Active Directory under my domain:</span><br/>
+  <img src="Screenshots/_USERS-made.png" width="250"/><br/>
+
+  <span style="font-weight: bold;">_USERS populated with the 1000 users:</span><br/>
+  <img src="Screenshots/_USERS-populated.png" width="300"/><br/>
+
+  <span style="font-weight: bold;">Events that were generated and forwarded from Active Directory to Splunk with this automation (3.5K+ logs!):</span><br/>
+  <img src="Screenshots/ADIndex3k.png" width="750"/>
+</li>
+<!-- last step ends here-->
+
 </ol>
 
 <hr/>
