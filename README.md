@@ -9,7 +9,7 @@
 <h2>Setting up Active Directory Domain</h2>
 
 <p>
-Before configuring Splunk, a basic Active Directory domain was created on the same Windows Server 2022 instance. A test user was added to verify login functionality. Initially, logging in failed because the user lacked administrative privileges (since I was using the same Windows 2022 Server VM to login with the test user). To resolve this, the test user was added to the <strong>“Domain Admins”</strong> group via Group Policy. After this change, login succeeded. The user was also set to reset their password upon first login which worked as intended.
+Before configuring Splunk, a basic Active Directory domain was created on the same Windows Server 2022 instance. A test user was added to verify login functionality. Initially, logging in failed because the user lacked administrative privileges (since I was using the same Windows 2022 Server VM to login with the test user). To resolve this, the test user was added to the <strong>“Domain Admins”</strong> group via Group Policy. After this change, login succeeded. The user was also configured to reset their password upon first login which worked as intended.
 </p>
 
 <hr/>
